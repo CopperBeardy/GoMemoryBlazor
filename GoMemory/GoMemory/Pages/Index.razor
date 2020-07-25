@@ -1,7 +1,18 @@
 ﻿@page "/"
+@using GoMemory.Helpers
+@using GoMemory.Common.Models
 
 <h1>Hello, world!</h1>
-
+<button @onclick="getImages" class="btn btn-primary" >images</button>
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code{
+
+    public List<ImageTile> imageTiles { get; set; }
+    private async Task getImages()
+    {
+        ImageHelper imageHelper = new ImageHelper();
+        imageTiles = await imageHelper.GetAllImages();
+
+    }
+}

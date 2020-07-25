@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30317.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoMemory", "GoMemory\GoMemory.csproj", "{AA1C75F0-2504-4B8F-BAD0-FC8F04574D0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoMemory", "GoMemory\GoMemory.csproj", "{AA1C75F0-2504-4B8F-BAD0-FC8F04574D0D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoMemory.Common", "GoMemory.Common\GoMemory.Common.csproj", "{152A4914-E242-4033-AAD5-CF71C18B3A26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoMemory.Tests", "GoMemory.Tests\GoMemory.Tests.csproj", "{2ACE8007-F7CB-4D4C-9A5A-8700ABCBE471}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{AA1C75F0-2504-4B8F-BAD0-FC8F04574D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA1C75F0-2504-4B8F-BAD0-FC8F04574D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA1C75F0-2504-4B8F-BAD0-FC8F04574D0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{152A4914-E242-4033-AAD5-CF71C18B3A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{152A4914-E242-4033-AAD5-CF71C18B3A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{152A4914-E242-4033-AAD5-CF71C18B3A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{152A4914-E242-4033-AAD5-CF71C18B3A26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ACE8007-F7CB-4D4C-9A5A-8700ABCBE471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ACE8007-F7CB-4D4C-9A5A-8700ABCBE471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ACE8007-F7CB-4D4C-9A5A-8700ABCBE471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ACE8007-F7CB-4D4C-9A5A-8700ABCBE471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
