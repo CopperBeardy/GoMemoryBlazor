@@ -1,9 +1,13 @@
 ﻿using GoMemory.Common.Models;
+
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace GoMemory.Helpers
@@ -16,67 +20,92 @@ namespace GoMemory.Helpers
         public  List<ImageTile> _images;
         public HttpClient httpClient { get; set; }
 
-        public async Task<List<ImageTile>> GetAllImages() 
-        {
-            
-           
 
-            //if (images == null) { return null; }
+  public string img { get; set; } = "images/apple.png";
+        
+        public async Task<string> GetAllImages() 
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var names = assembly.GetManifestResourceNames();
+            string result;
+            foreach (var file in names)
+            {
+                using (Stream stream = assembly.GetManifestResourceStream(file))
+                using (StreamReader streamReader = new StreamReader(stream))
+                {
+                    result = streamReader.ReadToEnd();
+                }
+            }
+              var i = img;
+
+            return i;
+            //try
+            //{
+            //    var images = await httpClient.GetAsync("Images/apple.png");
+
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw;
+            //}
+
+           // if (images == null) { return null; }
 
             //for (int i = 0; i < images.Length; i++)
             //{ }
 
-            _images.Add(new ImageTile
-            {
-                Path = images[i],
-                Name = Path.GetFileName(images[i])
-            });
-            //}
+            //_images.Add(new ImageTile
+            //{
+            //    Path = images[i],
+            //    Name = Path.GetFileName(images[i])
+            //});
+            ////}
 
             return null;
         }
 
-        string[] _ima;
-        public ImageHelper() => _ima = new string[]
-            {
-                 "apple.png",
-                "beer.png",
-                "bell.png",
-                "bison.png",
-                "cake.png",
-                "camera.png",
-               "carrot.png",
-                "cheese.png",
-                "chocolate.png",
-                "clock.png",
-                "codfish.png",
-                "crab.png",
-                "egg.png",
-                "frog.png",
-                "hammer.png",
-                "lightbulb.png",
-                "lightning.png",
-                "lolly.png",
-                "microphone.png",
-                "milkshake.png",
-                "orange.png",
-                "parrot.png",
-                "phone.png",
-                "pig.png",
-                "portobello.png",
-                "rabbit.png",
-                "robots.png",
-                "sausage.png",
-                "scissors.png",
-                "spider.png",
-                "star.png",
-                "strawberry.png",
-                "teapot.png",
-                "wasp.png",
-                "watermelon.png",
-                "wine.png"
+        //string[] _ima;
+        //public ImageHelper() => _ima = new string[]
+        //    {
+        //         "apple.png",
+        //        "beer.png",
+        //        "bell.png",
+        //        "bison.png",
+        //        "cake.png",
+        //        "camera.png",
+        //       "carrot.png",
+        //        "cheese.png",
+        //        "chocolate.png",
+        //        "clock.png",
+        //        "codfish.png",
+        //        "crab.png",
+        //        "egg.png",
+        //        "frog.png",
+        //        "hammer.png",
+        //        "lightbulb.png",
+        //        "lightning.png",
+        //        "lolly.png",
+        //        "microphone.png",
+        //        "milkshake.png",
+        //        "orange.png",
+        //        "parrot.png",
+        //        "phone.png",
+        //        "pig.png",
+        //        "portobello.png",
+        //        "rabbit.png",
+        //        "robots.png",
+        //        "sausage.png",
+        //        "scissors.png",
+        //        "spider.png",
+        //        "star.png",
+        //        "strawberry.png",
+        //        "teapot.png",
+        //        "wasp.png",
+        //        "watermelon.png",
+        //        "wine.png"
 
-            };
+        //    };
 
 
         /// <summary>
