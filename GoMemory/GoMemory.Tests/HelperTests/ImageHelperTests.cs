@@ -1,5 +1,5 @@
-﻿using GoMemory.Common.Interfaces;
-using GoMemory.Common.Models;
+﻿using GoMemory.Shared.Interfaces;
+using GoMemory.Shared.Models;
 using GoMemory.Helpers;
 using Moq;
 using System;

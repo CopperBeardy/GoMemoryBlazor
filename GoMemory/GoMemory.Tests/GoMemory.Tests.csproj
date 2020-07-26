@@ -21,8 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GoMemory.Common\GoMemory.Common.csproj" />
-    <ProjectReference Include="..\GoMemory\GoMemory.csproj" />
+    <ProjectReference Include="..\GoMemory\Client\GoMemory.Client.csproj" />
+    <ProjectReference Include="..\GoMemory\Server\GoMemory.Server.csproj" />
+    <ProjectReference Include="..\GoMemory\Shared\GoMemory.Shared.csproj" />
   </ItemGroup>
 
 </Project>
