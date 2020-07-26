@@ -8,6 +8,6 @@ namespace GoMemory.Common.Models
         public Color TextColor { get; set; }
         public string SpeltColor { get; set; }
 
-      
+
     }
 }

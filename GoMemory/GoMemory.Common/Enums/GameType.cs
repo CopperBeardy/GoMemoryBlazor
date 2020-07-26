@@ -6,7 +6,7 @@ namespace GoMemory.Common.Enums
     {
         Guess,
         Sequential,
-        ColourComplex
+        ColorComplex
 
     }
 }

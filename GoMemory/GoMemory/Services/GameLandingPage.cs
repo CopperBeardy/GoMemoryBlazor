@@ -71,58 +71,13 @@
 //        }
 
 
-//        public async void RulesBtn_OnClicked(object sender, EventArgs e)
-//        {
-//              await Navigation.PushAsync(new RulesPage(GameType));
-        
-//        }
+
 
 
 //        /// <summary>
-//        /// setting the difficulty of  the games
-//        /// </summary>
-//        /// <param name="sender"></param>
-//        /// <param name="e"></param>
-//        public void SetGame_OnClicked(object sender, EventArgs e)
-//        {
-//            Button clickedButton = sender as Button;
-
-//            if(clickedButton == null)
-//                return;
+//    
 
 
-//            switch (clickedButton.Text)
-//            {
-//                case "Easy":
-//                    SetGamePlay(Difficulty.Easy);
-//                    break;
-//                case "Normal":
-//                    SetGamePlay(Difficulty.Normal);
-//                    break;
-//                default:
-//                    SetGamePlay(Difficulty.Hard);
-//                    break;
-//            }
-
-
-//        }
-
-
-//        //set game play style
-//        public async void SetGamePlay(Difficulty difficulty, ResumeModel resume = null)
-//        {
-//            switch (GameType)
-//            {
-//                case GameType.Guess:
-//                    await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty, GameType, resume));
-//                    break;
-//                case GameType.ColourComplex:
-//                    await Navigation.PushAsync(new ColourComplexGamePlayPage(difficulty, GameType, resume));
-//                    break;
-//                default:
-//                    await Navigation.PushAsync(new SequentialGamePlayPage(difficulty, GameType, resume));
-//                    break;
-//            }
-//        }
+//       
 //    }
 //}

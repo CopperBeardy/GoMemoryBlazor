@@ -1,33 +1,80 @@
 ﻿
 
-//using GoMemory.Shared.Models;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Timers;
-//using static System.Net.Mime.MediaTypeNames;
+using GoMemory.Shared.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Timers;
+
 
 using GoMemory.Common.Models;
 using System.Collections.Generic;
+using GoMemory.Common.Interfaces;
 
 namespace GoMemory.GamePlay
 {
     public class WhatYouSeeGamePlay
     {
-        //        readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
+        //readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
 
         //correct guesses made by player
+
         public List<ImageTile> CorrectImageTileGuesses { get; set; }
         //current image tile being used in the game
         public List<ImageTile> CurrentImageTiles { get; set; }
 
         //ImageTiles that need to be matched
         public List<ImageTile> CurrentPlayTile { get; set; }
-      
 
-      //  public List<ImageTile> CreateGuessTiles()
-        //    {}
+        //difficulty of game
+        public GameSettings _gameSettings { get; set; }
 
+
+
+        readonly IImageHelper imageHelper;
+
+        public WhatYouSeeGamePlay(GameSettings gameSetting, IImageHelper imageHelper)
+        {
+            this.imageHelper = imageHelper;
+            _gameSettings = gameSetting;
+
+            GetGameTiles();
+
+        }
+
+        public void CreateGuessTiles()
+        {
+            CorrectImageTileGuesses = CurrentImageTiles.Take(_gameSettings.MatchesNeeded).ToList();
+        }
+
+        private void GetGameTiles()
+        {
+            CurrentImageTiles = imageHelper.GetImages(_gameSettings.GridColumnSize * _gameSettings.GridRowSize);
+
+        }
+
+
+        /// <summary>
+        /// Determines if max level for difficulty is reached if not
+        /// next round is initialized
+        /// </summary>
+        public bool NextRound()
+        {
+
+            _gameSettings.CurrentLevel++;
+            if (_gameSettings.CurrentLevel <= _gameSettings.MaxLevel)
+            {
+                InitializeRound();
+                return true;
+            }
+
+            return false;
+        }
+
+        private void InitializeRound()
+        {
+            throw new NotImplementedException();
+        }
 
         //        //TODO REPLACE WITH CSS GRID
         //        //public Grid Grid;

@@ -2,7 +2,7 @@
 {
     public class ImageTile
     {
-        public string Path { get; set; }
+        public string Source { get; set; }
         public string Name { get; set; }
     }
 }
