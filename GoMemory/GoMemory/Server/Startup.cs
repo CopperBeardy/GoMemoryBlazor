@@ -13,6 +13,9 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using GoMemory.Server.Data;
 using GoMemory.Server.Models;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace GoMemory.Server
 {
@@ -41,7 +44,7 @@ namespace GoMemory.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
-
+          
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -65,6 +68,13 @@ namespace GoMemory.Server
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //        Path.Combine(Directory.GetCurrentDirectory(), @"Images")),
+            //    RequestPath = new PathString("/Images")
+
+            //});
 
             app.UseRouting();
 

@@ -23,4 +23,43 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\images\apple.png" />
+    <None Include="wwwroot\images\beer.png" />
+    <None Include="wwwroot\images\bell.png" />
+    <None Include="wwwroot\images\bison.png" />
+    <None Include="wwwroot\images\cake.png" />
+    <None Include="wwwroot\images\camera.png" />
+    <None Include="wwwroot\images\carrot.png" />
+    <None Include="wwwroot\images\cheese.png" />
+    <None Include="wwwroot\images\chocolate.png" />
+    <None Include="wwwroot\images\clock.png" />
+    <None Include="wwwroot\images\codfish.png" />
+    <None Include="wwwroot\images\crab.png" />
+    <None Include="wwwroot\images\egg.png" />
+    <None Include="wwwroot\images\frog.png" />
+    <None Include="wwwroot\images\hammer.png" />
+    <None Include="wwwroot\images\lightbulb.png" />
+    <None Include="wwwroot\images\lightning.png" />
+    <None Include="wwwroot\images\lolly.png" />
+    <None Include="wwwroot\images\microphone.png" />
+    <None Include="wwwroot\images\milkshake.png" />
+    <None Include="wwwroot\images\orange.png" />
+    <None Include="wwwroot\images\parrot.png" />
+    <None Include="wwwroot\images\phone.png" />
+    <None Include="wwwroot\images\pig.png" />
+    <None Include="wwwroot\images\portobello.png" />
+    <None Include="wwwroot\images\rabbit.png" />
+    <None Include="wwwroot\images\robots.png" />
+    <None Include="wwwroot\images\sausage.png" />
+    <None Include="wwwroot\images\scissors.png" />
+    <None Include="wwwroot\images\spider.png" />
+    <None Include="wwwroot\images\star.png" />
+    <None Include="wwwroot\images\strawberry.png" />
+    <None Include="wwwroot\images\teapot.png" />
+    <None Include="wwwroot\images\wasp.png" />
+    <None Include="wwwroot\images\watermelon.png" />
+    <None Include="wwwroot\images\wine.png" />
+  </ItemGroup>
+
 </Project>

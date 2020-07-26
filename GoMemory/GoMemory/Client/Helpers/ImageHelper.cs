@@ -1,14 +1,19 @@
 ﻿using GoMemory.Shared.Interfaces;
 using GoMemory.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Drawing;
+using System.Threading.Tasks;
 
 namespace GoMemory.Helpers
 {
     public class ImageHelper : IImageHelper
     {
-
+        HttpClient Http;
         public List<ImageTile> _images;
         public List<string> ImageCollection => new List<string>
         {
@@ -61,8 +66,10 @@ namespace GoMemory.Helpers
                     Name = img.Replace(".png", string.Empty)
                 });
             }
+
         }
 
+       
         /// <summary>
         ///  Randomize the order of images that will be place for the player to select from
         /// </summary>
