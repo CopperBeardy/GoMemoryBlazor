@@ -1,0 +1,36 @@
+﻿<h3>GameOptions</h3>
+
+
+<h3>Select Difficulty</h3>
+<label class="radio-inline"><input type="radio" @onchange="ChangeOption"  value="Easy" name="difficulty">Easy</label>
+<label class="radio-inline"><input type="radio" @onchange="ChangeOption" value="Normal" name="difficulty" checked>Normal</label>
+<label class="radio-inline"><input type="radio" @onchange="ChangeOption" value="Hard" name="difficulty">Hard</label>
+
+<button @onclick="OptionsSelected" type="submit">Play</button>
+
+
+@code {
+    [Parameter]
+    public ModeDifficulty Difficulty { get; set; }
+
+    [Parameter]
+    public EventCallback<ModeDifficulty> DifficultyChanged { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Difficulty = ModeDifficulty.Normal;
+        return base.OnInitializedAsync();
+    }
+
+    public Task OptionsSelected()
+    {
+
+        return DifficultyChanged.InvokeAsync(Difficulty);
+    }
+
+    public void ChangeOption(ChangeEventArgs change)
+    {
+        
+        Difficulty = (ModeDifficulty)Enum.Parse(typeof(ModeDifficulty),  change.Value.ToString());
+    }
+}

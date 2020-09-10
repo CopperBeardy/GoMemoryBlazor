@@ -1,0 +1,15 @@
+﻿@page "/"
+@inject NavigationManager UriHelper
+<h1>Go Memory!!!</h1>
+
+<h3>Select Game</h3>
+
+@foreach (var title in GameTitles)
+{
+    <NavLink class="btn" href="@title.Replace(" ","")" >@title</NavLink><br/>
+}
+
+@code{
+    public List<string> GameTitles = new List<string> { "What you see", "Sequential", "Colour complex" };
+   
+}
