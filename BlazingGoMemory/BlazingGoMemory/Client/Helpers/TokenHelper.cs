@@ -13,11 +13,12 @@ using System.IO.Pipes;
 
 namespace BlazingGoMemory.Client.Helpers
 {
-       public class TokenHelper : ITokenHelper
+       public static class TokenHelper 
        {
-
-        private List<Token> _tokens;
-        public List<string> TokenCollection => new List<string>
+             
+        public static List<Token> GetAllTokens()
+        {   
+            List<string> TokenCollection = new List<string>
             {
                    "apple.png",
                     "beer.png",
@@ -56,26 +57,28 @@ namespace BlazingGoMemory.Client.Helpers
                     "watermelon.png",
                     "wine.png"
     };
-        public TokenHelper()
-        {
-            _tokens = new List<Token>();
+    
+            List<Token> tokens = new List<Token>();
             //Temporary generation
             foreach (var img in TokenCollection)
             {
-                _tokens.Add(new Token
+                tokens.Add(new Token
                 {
                     Source = $"../images/{img}",
                     Name = img.Replace(".png", string.Empty)
                 });
             }
-
+            return tokens;
         }
-       
-        public List<Token> GetShuffledTokens(int totalTokens) =>
-            ShuffleCollection(_tokens).Take(totalTokens).ToList();
         
+       
+        //public List<Token> GetShuffledTokens(int totalTokens) =>
+        //    ShuffleCollection(_tokens).Take(totalTokens).ToList(); 
+        
+        public static List<Token> ToMatchTokenList(int numberOfTokensNeeded, List<Token> tokens) =>
+            ShuffleCollection(tokens).Take(numberOfTokensNeeded).ToList();
 
-        public List<Token> ShuffleCollection(List<Token> tokens)
+        public static List<Token> ShuffleCollection(List<Token> tokens)
         {
             Random rnd = new Random();            
             for (int i = 0; i < tokens.Count; i++)
@@ -90,26 +93,11 @@ namespace BlazingGoMemory.Client.Helpers
 
 
 
-        /// <summary>
-        ///    randomizing the order of the list of Tokens that need to be match for games in which order is needed
-        /// </summary>
-        /// <param name="numberOfTokensNeeded"></param>
-        /// <param name="tokens"></param>
-        /// <returns>List<ImageTile></returns>
-        public List<Token> ToMatchTokenList(int numberOfTokensNeeded, List<Token> tokens)
-        {
-            if (numberOfTokensNeeded == 0)
-            {
-                return ShuffleCollection(tokens).ToList();
-            }
-            else if (numberOfTokensNeeded < 0)
-            {
-                return null;
-            }
-            return ShuffleCollection(tokens).Take(numberOfTokensNeeded).ToList();
-        }
+       
+      
+        
 
-     
+
     }
 }
 

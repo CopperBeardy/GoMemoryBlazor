@@ -25,7 +25,7 @@ namespace BlazingGoMemory.Client
 
             // Supply HttpClient instances that include access tokens when making requests to the server project
             builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("BlazingGoMemory.ServerAPI"));
-            builder.Services.AddScoped<ITokenHelper, TokenHelper>();
+           // builder.Services.AddScoped<ITokenHelper, TokenHelper>();
             builder.Services.AddApiAuthorization();
 
             await builder.Build().RunAsync();

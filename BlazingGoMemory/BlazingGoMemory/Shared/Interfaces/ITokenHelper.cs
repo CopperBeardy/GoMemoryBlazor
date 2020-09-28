@@ -7,7 +7,8 @@ namespace BlazingGoMemory.Shared.Interfaces
     public interface ITokenHelper
     {
      
-        List<Token> GetShuffledTokens(int totalToken);
+    //    List<Token> GetShuffledTokens(int totalToken);
+        List<Token> GetAllTokens();
         List<Token> ShuffleCollection(List<Token> tokens);
         List<Token> ToMatchTokenList(int numberOfTokensNeeded, List<Token> tokens);
 
