@@ -1,0 +1,18 @@
+﻿<h2>Congratulations !</h2>
+
+<h3>Level @Level Complete</h3>
+
+<button @onclick="MoveToNextLevel" type="submit" >Next Level</button>
+
+@code {
+    [CascadingParameter]
+    public int Level { get; set; }
+    [Parameter]
+    public EventCallback<LevelStatus> NextLevel { get; set; }
+
+    public Task MoveToNextLevel()
+    {
+
+        return NextLevel.InvokeAsync(LevelStatus.Next);
+    }
+}

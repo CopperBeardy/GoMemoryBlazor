@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingGoMemory.Client", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingGoMemory.Shared", "BlazingGoMemory\Shared\BlazingGoMemory.Shared.csproj", "{E66F5A4A-5B9D-4D29-9FC8-531DBF532BD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingGoMemory.Tests", "BlazingGoMemory.Tests\BlazingGoMemory.Tests.csproj", "{DFF04C8B-30EA-4553-AF7A-F7457A6721A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingGoMemory.Tests", "BlazingGoMemory.Tests\BlazingGoMemory.Tests.csproj", "{DFF04C8B-30EA-4553-AF7A-F7457A6721A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

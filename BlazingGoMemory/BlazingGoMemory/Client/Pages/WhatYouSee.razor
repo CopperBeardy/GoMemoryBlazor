@@ -32,7 +32,9 @@ else
               
         break;
     case GameStage.LevelComplete:
-        //complete component
+<CascadingValue Value="@Game.CurrentLevel">
+    <LevelComplete NextLevel="NextLevel"></LevelComplete>
+</CascadingValue>
         break;
     case GameStage.FailLevel:
         // fail component
@@ -61,6 +63,7 @@ else
     //[Inject]
     //public ITokenHelper TokenHelper { get; set; }
     public GameStage GameStage { get; set; }
+   
 
 
 
@@ -94,6 +97,13 @@ else
         }
         StateHasChanged();
     }
+
+    void NextLevel(LevelStatus status)
+    {
+        var stat = status;
+        StateHasChanged();
+    }
+
 
     void InitilizeGame()
     {
@@ -150,7 +160,7 @@ else
     void MemorizeStage()
     {
         Game.CurrentLevel++;
-        Game.TokensToRemember = TokenHelper.ToMatchTokenList(Game.CurrentLevel + 2, AllTokens);      
+        Game.TokensToRemember = TokenHelper.ToMatchTokenList(Game.CurrentLevel + 2, AllTokens);
 
     }
 
