@@ -13,164 +13,174 @@ else
     switch (GameStage)
     {
         case GameStage.Memorize:
-              MemorizeStage();
-              <div class="d-flex flex-column ">
-                  <div class="d-flex flex-row">
-                      <label>Level - @Game.CurrentLevel </label>
-                      <button @onclick="ChangeStage">Start Recall</button>
-                  </div> 
-                  <div class="d-flex flex-wrap">
-                      @foreach (Token token in Game.TokensToRemember)
-                      {
-                        
-                        <img src="@token.Source" width="200" height="200"  />
-                      }
-                      
-                  </div> 
-                
-              </div>  
-              
-        break;
-    case GameStage.LevelComplete:
-<CascadingValue Value="@Game.CurrentLevel">
-    <LevelComplete NextLevel="NextLevel"></LevelComplete>
-</CascadingValue>
-        break;
-    case GameStage.FailLevel:
-<CascadingValue Value="@Game.CurrentLevel">
-    <LevelFailed RedoLevel="RedoLevel"></LevelFailed>
-</CascadingValue>
-    break;
-    case GameStage.Guess:
-    <h2>Hello from guess</h2>
-    //Guess component
-    break;
-    case GameStage.CompleteMode:
-    //CompleteCoponent;
-    break;
+        
+            <div class="d-flex flex-column ">
+                <div class="d-flex flex-row">
+                    <label>Level - @Game.CurrentLevel </label>
+                    <button @onclick="ChangeStage">Start Recall</button>
+                </div>
+                <div class="d-flex flex-wrap">
+                    @foreach (Token token in Game.TokensToRemember)
+                    {
+
+                        <img src="@token.Source" width="200" height="200" />
+                    }
+
+                </div>
+
+            </div>
+
+            <button @onclick="ChangeStage">Start</button>
 
 
-    }
-    }
-
-
-
-    <button @onclick="ResetGame">Reset Game</button>
-    @code {
-
-public Game Game { get; set; }
-
-public bool ToggleGameOptionsShow { get; set; }
-public List<Token> AllTokens { get; set; }
-//[Inject]
-//public ITokenHelper TokenHelper { get; set; }
-public GameStage GameStage { get; set; }
-
-
-
-
-
-protected override Task OnInitializedAsync()
-{
-    Game = new Game();
-
-    ToggleGameOptionsShowChange(ModeDifficulty.None);
-    return base.OnInitializedAsync();
-}
-
-void ResetGame()
-{
-    Game.CurrentLevel = 0;
-    ToggleGameOptionsShowChange(ModeDifficulty.None);
-}
-
-void ToggleGameOptionsShowChange(ModeDifficulty mode)
-{
-    Game.GameSettings.Difficulty = mode;
-    if (mode == ModeDifficulty.None)
-    {
-        ToggleGameOptionsShow = true;
-    }
-    else
-    {
-
-        InitilizeGame();
-        ToggleGameOptionsShow = false;
-    }
-    StateHasChanged();
-}
-
-void NextLevel(LevelStatus status)
-{
-    //Todo:  set the next round ready to play
-    StateHasChanged();
-}
-
-void RedoLevel(LevelStatus status)
-{
-    //Todo reset the current level
-    StateHasChanged();
-}
-
-void InitilizeGame()
-{
-
-    Game.GameSettings.RecallStyle = RecallStyle.Unordered;
-
-    //bad place put better
-    GameStage = GameStage.Memorize;
-
-    switch (Game.GameSettings.Difficulty)
-    {
-        case ModeDifficulty.Easy:
-            Game.GameSettings.MaxLevel = 10;
-            Game.GameSettings.GameSurface.Rows = 4;
-            Game.GameSettings.GameSurface.Columns = 4;
+            break;
+        case GameStage.LevelComplete:
+            <CascadingValue Value="@Game.CurrentLevel">
+                <LevelComplete NextLevel="NextLevel"></LevelComplete>
+            </CascadingValue>
+            break;
+        case GameStage.FailLevel:
+            <CascadingValue Value="@Game.CurrentLevel">
+                <LevelFailed NextLevel="NextLevel"></LevelFailed>
+            </CascadingValue>
+            break;
+        case GameStage.Guess:
+            <h2>Hello from guess</h2>
+            //Guess component
+            break;
+        case GameStage.CompleteMode:
+            <CascadingValue Value="@Game.GameSettings.Difficulty">
+                <DifficultyComplete GameMenu="ToggleGameOptionsShowChange"></DifficultyComplete>
+            </CascadingValue>
             break;
 
-        case ModeDifficulty.Normal:
-            Game.GameSettings.MaxLevel = 20;
-            Game.GameSettings.GameSurface.Rows = 5;
-            Game.GameSettings.GameSurface.Columns = 5;
-            break;
 
-        case ModeDifficulty.Hard:
-            Game.GameSettings.MaxLevel = 30;
-            Game.GameSettings.GameSurface.Rows = 6;
-            Game.GameSettings.GameSurface.Columns = 6;
-            break;
-        default:
-            break;
     }
-
-    AllTokens = TokenHelper.ToMatchTokenList(Game.GameSettings.GameSurface.Columns *
-    Game.GameSettings.GameSurface.Rows, TokenHelper.GetAllTokens());
-
-
-
-
-
 }
 
-void ChangeStage()
-{
-    switch (GameStage)
+
+
+<button @onclick="ResetGame">Reset Game</button>
+@code {
+
+    public Game Game { get; set; }
+
+    public bool ToggleGameOptionsShow { get; set; }
+    public List<Token> AllTokens { get; set; }
+    //[Inject]
+    //public ITokenHelper TokenHelper { get; set; }
+    public GameStage GameStage { get; set; }
+
+
+    protected override Task OnInitializedAsync()
     {
-        case GameStage.Memorize:
+        Game = new Game();
+
+        ToggleGameOptionsShowChange(ModeDifficulty.None);
+        return base.OnInitializedAsync();
+    }
+
+    void ResetGame()
+    {
+        Game.CurrentLevel = 0;
+        ToggleGameOptionsShowChange(ModeDifficulty.None);
+    }
+
+    void ToggleGameOptionsShowChange(ModeDifficulty mode)
+    {
+        Game.GameSettings.Difficulty = mode;
+        if (mode == ModeDifficulty.None)
+        {
+            ToggleGameOptionsShow = true;
+        }
+        else
+        {
+            InitilizeGame();
+            ToggleGameOptionsShow = false;
+        }
+        StateHasChanged();
+    }
+
+
+
+    void NextLevel(bool status)
+    {
+        _ = status switch
+        {
+            true => Game.CurrentLevel++,
+            false => Game.CurrentLevel--
+        };       
+
+        ChangeStage();
+    }
+
+    void InitilizeGame()
+    {
+
+        Game.GameSettings.RecallStyle = RecallStyle.Unordered;
+
+    
+        NextLevel(true);
+        GameStage = GameStage.Memorize;
+
+        switch (Game.GameSettings.Difficulty)
+        {
+            case ModeDifficulty.Easy:
+                Game.GameSettings.MaxLevel = 10;
+                Game.GameSettings.GameSurface.Rows = 4;
+                Game.GameSettings.GameSurface.Columns = 4;
+                break;
+
+            case ModeDifficulty.Normal:
+                Game.GameSettings.MaxLevel = 20;
+                Game.GameSettings.GameSurface.Rows = 5;
+                Game.GameSettings.GameSurface.Columns = 5;
+                break;
+
+            case ModeDifficulty.Hard:
+                Game.GameSettings.MaxLevel = 30;
+                Game.GameSettings.GameSurface.Rows = 6;
+                Game.GameSettings.GameSurface.Columns = 6;
+                break;
+            default:
+                break;
+        }
+
+        AllTokens = TokenHelper.ToMatchTokenList(Game.GameSettings.GameSurface.Columns *
+        Game.GameSettings.GameSurface.Rows, TokenHelper.GetAllTokens());
+
+    }
+
+    void ChangeStage()
+    {
+        if (GameStage == GameStage.Memorize)
+        {
             GameStage = GameStage.Guess;
+            GuessStageSet();
+        }
+        else
+        {
+            GameStage = GameStage.Memorize;
+            MemorizeStage();
+        }
 
-            break;
+        StateHasChanged();
     }
-    StateHasChanged();
-}
 
-void MemorizeStage()
-{
-    Game.CurrentLevel++;
-    Game.TokensToRemember = TokenHelper.ToMatchTokenList(Game.CurrentLevel + 2, AllTokens);
+    void MemorizeStage()
+    {
 
-}
+        Game.TokensToRemember = TokenHelper.ToMatchTokenList(Game.CurrentLevel + 2, AllTokens);
 
+    }
+
+    void GuessStageSet()
+    {
+        Game.TokensSelected = new List<Token>();
 
 
     }
+
+
+
+}
