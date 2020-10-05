@@ -5,14 +5,14 @@
 <button @onclick="MoveToNextLevel" type="submit" >Next Level</button>
 
 @code {
-    [CascadingParameter]
-    public int Level { get; set; }
-    [Parameter]
-    public EventCallback<LevelStatus> NextLevel { get; set; }
+        [CascadingParameter]
+        public int Level { get; set; }
+        [Parameter]
+        public EventCallback<bool> NextLevel { get; set; }
 
     public Task MoveToNextLevel()
     {
 
-        return NextLevel.InvokeAsync(LevelStatus.Next);
+        return NextLevel.InvokeAsync(true);
     }
 }

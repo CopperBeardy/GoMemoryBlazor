@@ -1,0 +1,19 @@
+﻿<h3></h3>
+<h2>Congratulations !</h2>
+
+<h3>You have completed all of the  @ModeDifficulty</h3>
+
+<button @onclick="MainMenu" type="submit">Main Menu</button>
+
+@code {
+    [CascadingParameter]
+    public ModeDifficulty ModeDifficulty { get; set; }
+    [Parameter]
+    public EventCallback<ModeDifficulty> GameMenu { get; set; }
+
+    public Task MainMenu()
+    {
+        ModeDifficulty = ModeDifficulty.None;
+        return GameMenu.InvokeAsync(ModeDifficulty);
+    }
+}
