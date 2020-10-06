@@ -1,15 +1,13 @@
-using System;
-using System.Net.Http;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using BlazingGoMemory.Shared.Interfaces;
-using BlazingGoMemory.Client.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BlazingGoMemory.Client
 {
@@ -24,8 +22,9 @@ namespace BlazingGoMemory.Client
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             // Supply HttpClient instances that include access tokens when making requests to the server project
-            builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("BlazingGoMemory.ServerAPI"));
-           // builder.Services.AddScoped<ITokenHelper, TokenHelper>();
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("BlazorApp3.ServerAPI"));
+
+            // builder.Services.AddScoped<ITokenHelper, TokenHelper>();
             builder.Services.AddApiAuthorization();
 
             await builder.Build().RunAsync();
