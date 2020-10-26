@@ -6,6 +6,7 @@ namespace BlazingGoMemory.Shared.Enums
 {
     public enum GameStage
     {
+        None,
         Memorize,
         Guess,        
         LevelComplete,
