@@ -31,7 +31,7 @@ else
             </div>
 
             <button @onclick="ChangeStage">Start</button>
-
+    
 
             break;
 
@@ -39,14 +39,14 @@ else
             <h2>Hello from guess</h2>
             //Guess component
 
-            <button @onclick="ResetLevel" >Reset Level</button>
+            <button @onclick="ResetLevel">Reset Level</button>
             break;
 
         case GameStage.LevelComplete:
 
-            <CascadingValue Value="@Game.CurrentLevel">
-                <LevelComplete NextLevel="NextLevel"></LevelComplete>
-            </CascadingValue>
+
+            <LevelComplete @bind-Level="@Game.CurrentLevel" NextLevel="NextLevel"></LevelComplete>
+
             break;
 
         case GameStage.FailLevel:
@@ -91,7 +91,9 @@ else
     void ResetGame()
     {
         Game.CurrentLevel = 0;
+        GameStage = GameStage.None;
         ToggleGameOptionsShowChange(ModeDifficulty.None);
+
     }
 
     void ToggleGameOptionsShowChange(ModeDifficulty mode)
@@ -109,7 +111,12 @@ else
         StateHasChanged();
     }
 
-    void ResetLevel() => NextLevel(false);
+    void ResetLevel()
+    {
+        GameStage = GameStage.Memorize;
+        StateHasChanged();
+    }
+
 
     void NextLevel(bool status)
     {
@@ -128,7 +135,7 @@ else
         Game.GameSettings.RecallStyle = RecallStyle.Unordered;
 
 
-        NextLevel(true);
+
 
 
         switch (Game.GameSettings.Difficulty)
@@ -156,8 +163,8 @@ else
 
         AllTokens = TokenHelper.ToMatchTokenList(Game.GameSettings.GameSurface.Columns *
             Game.GameSettings.GameSurface.Rows, TokenHelper.GetAllTokens());
-
-        GameStage = GameStage.Memorize;
+        NextLevel(true);
+        // GameStage = GameStage.None;
     }
 
     void ChangeStage()
@@ -178,21 +185,21 @@ else
 
     void MemorizeStage()
     {
-        Game.TokensToRemember = null;
+
         Game.TokensToRemember = TokenHelper.ToMatchTokenList(Game.CurrentLevel + 2, AllTokens);
 
     }
 
     void GuessStageSet()
     {
-        Game.TokensSelected = null;
 
-        
+
+
     }
 
-    //to write a method to watch the guess tokens being hit and check 
+    //to write a method to watch the guess tokens being hit and check
     //whether they are correct or not. if not then display fail component
-    //else if correct check if required number correctly guess,if not 
+    //else if correct check if required number correctly guess,if not
     //wait for next guess. if all required correctly guessed display complete level component
     // then if all level have been completed show difficult complete screen, else start next level.
 
