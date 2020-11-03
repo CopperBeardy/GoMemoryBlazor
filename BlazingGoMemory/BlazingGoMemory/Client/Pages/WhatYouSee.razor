@@ -4,53 +4,60 @@
 
 @if (ToggleGameOptionsShow)
 {
-    <CascadingValue Value="@Game">
+    <CascadingValue Value="@Game" IsFixed="true">
         <GameOptions OptionsSet="ToggleGameOptionsShowChange"></GameOptions>
     </CascadingValue>
 }
 else
 {
-
     switch (GameStage)
     {
         case GameStage.Memorize:
-        <CascadingValue Value="@Game">
-    <MemorisingScreen NextLevel="ChangeStage"></MemorisingScreen>
-    </CascadingValue>
-        break;
+            <CascadingValue Value="@Game" IsFixed="true">
+                <MemorisingScreen NextLevel="TogglePlayStage"></MemorisingScreen>
+            </CascadingValue>
+            break;
 
         case GameStage.Guess:
-        <h2>Hello from guess</h2>
-        //Guess component
 
-        <button @onclick="ResetLevel">Reset Level</button>
-        break;
+            <CascadingValue Value="@Game" IsFixed="true">
+                <PlayArea Completed="CheckFlag"></PlayArea>
+            </CascadingValue>
+            break;
 
+        //not checked as yet
         case GameStage.LevelComplete:
-        <LevelComplete @bind-Level="@Game.CurrentLevel" NextLevel="NextLevel"></LevelComplete>
-        break;
+            <LevelComplete @bind-Level="@Game.CurrentLevel"
+                           NextLevel="NextLevel"></LevelComplete>
+            break;
 
+        //not checked as yet
         case GameStage.FailLevel:
-        <LevelFailed @bind-Level="@Game.CurrentLevel" ResetLevel="ResetLevel"></LevelFailed>
-        break;
+<CascadingValue Value="@Game.CurrentLevel">
+    <LevelFailed 
+                 ResetLevel="ResetLevel"></LevelFailed>
+</CascadingValue> 
+break;
 
+        //not checked as yet
         case GameStage.CompleteMode:
-        <DifficultyComplete @bind-ModeDifficulty="@Game.GameSettings.Difficulty" GameMenu="ResetGame"></DifficultyComplete>
-        break;
-        }
-        }
-        <button @onclick="ResetGame">Reset Game</button>
+            <DifficultyComplete @bind-ModeDifficulty="@Game.GameSettings.Difficulty"
+                                GameMenu="ResetGame"></DifficultyComplete>
+            break;
+    }
+}
+<button @onclick="ResetGame">Reset Game</button>
 
 
 
 
 
-        @code {
+@code {
 
     public Game Game { get; set; }
 
     public bool ToggleGameOptionsShow { get; set; }
-    public List<Token> AllTokens { get; set; }
+
     //[Inject]
     //public ITokenHelper TokenHelper { get; set; }
     public GameStage GameStage { get; set; }
@@ -102,19 +109,19 @@ else
             false => Game.CurrentLevel--
         };
 
-        ChangeStage();
+        TogglePlayStage();
     }
 
     void InitializeGame()
     {
 
         Game.GameSettings.RecallStyle = RecallStyle.Unordered;
-        AllTokens = TokenHelper.ToMatchTokenList(Game.GameSettings.MaxTokens, TokenHelper.GetAllTokens());
+        Game.AllTokens = TokenHelper.ToMatchTokenList(Game.GameSettings.MaxTokens, TokenHelper.GetAllTokens());
         NextLevel(true);
 
     }
 
-    void ChangeStage()
+    void TogglePlayStage()
     {
         if (GameStage == GameStage.Memorize)
         {
@@ -130,11 +137,35 @@ else
         StateHasChanged();
     }
 
+    void CheckFlag(bool success)
+    {
+        if (success)
+        {
+            //check if last level if not  go next level
+            Game.CurrentLevel++;
+            if (Game.CurrentLevel > Game.GameSettings.MaxLevel)
+            {
+                //difficulty is complete
+                GameStage = GameStage.CompleteMode;
+            }
+            else
+            {
+                GameStage = GameStage.LevelComplete;
+            }
+        }
+        else
+        {
+            GameStage = GameStage.FailLevel;
+            
+        }
+        StateHasChanged();
+    }
+
     void MemorizeStage()
     {
 
-        Game.TokensToRemember = TokenHelper.ToMatchTokenList(Game.CurrentLevel + 2, AllTokens);
-
+        Game.TokensToRemember = TokenHelper.ToMatchTokenList(Game.CurrentLevel + 2, Game.AllTokens);
+        Game.TokensToRemember = TokenHelper.ShuffleCollection(Game.TokensToRemember);
     }
 
     void GuessStageSet()
@@ -152,4 +183,4 @@ else
 
 
 
-        }
+}

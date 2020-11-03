@@ -11,7 +11,7 @@ namespace BlazingGoMemory.Shared.Models
         public List<Token> TokensToRemember { get; set; }
         
         public List<Token> TokensSelected { get; set; }
-     
+        public List<Token> AllTokens { get; set; }
 
 
         public Game()

@@ -1,5 +1,102 @@
 ﻿<h3>PlayArea</h3>
 
+<div class="@GridType">
+    @for (int i = 0; i < Game.GameSettings.SurfaceSize; i++)
+    {
+
+        @for (int j = 0; j < Game.GameSettings.SurfaceSize; j++)
+        {
+            <ImageButton Src="@Game.AllTokens[index].Source"
+                         Name="@Game.AllTokens[index].Name"
+                         Selected="TokenClicked"></ImageButton>
+
+            index++;
+
+        }
+    }
+</div>
+
 @code {
-    
+    [CascadingParameter]
+    public Game Game { get; set; }
+
+    int index = 0;
+
+
+
+    [Parameter]
+    public string GridType { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> Completed { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        SetGrid();
+        Game.AllTokens = TokenHelper.ShuffleCollection(Game.AllTokens);
+        return base.OnInitializedAsync();
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        index = 0;
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    public Task EndPlay(bool success)
+    {
+        if (success)
+        {
+            return  Completed.InvokeAsync(true);
+        }
+
+        return Completed.InvokeAsync(false);
+
+
+    }
+
+
+    void TokenClicked(string name)
+    {
+        bool Flag = false;
+        Token t = Game.AllTokens.FirstOrDefault(e => e.Name.Equals(name));
+
+
+        if (Game.TokensToRemember.Contains(t) &&
+            !Game.TokensSelected.Contains(t))
+        {
+            Game.TokensSelected.Add(t);
+            if (Game.TokensSelected.Count == Game.TokensToRemember.Count)
+            {
+
+                EndPlay(Flag = true);
+            }
+        }
+        else
+        {
+            EndPlay(Flag);
+        }
+    }
+
+    void SetGrid()
+    {
+        switch (Game.GameSettings.Difficulty)
+        {
+            case ModeDifficulty.Easy:
+                GridType = "small-grid";
+                break;
+            case ModeDifficulty.Normal:
+                GridType = "medium-grid";
+                break;
+            case ModeDifficulty.Hard:
+                GridType = "large-grid";
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }
+
+

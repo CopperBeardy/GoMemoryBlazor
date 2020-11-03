@@ -12,6 +12,8 @@ namespace BlazingGoMemory.Shared.Models
         public RecallStyle RecallStyle { get; set; }
         public ModeDifficulty Difficulty { get; set; }
 
-        
+        public int SurfaceSize { get; set; }
+
+
     }
 }
