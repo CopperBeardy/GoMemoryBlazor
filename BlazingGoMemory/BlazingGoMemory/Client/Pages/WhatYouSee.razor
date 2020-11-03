@@ -27,22 +27,23 @@ else
 
         //not checked as yet
         case GameStage.LevelComplete:
-            <LevelComplete @bind-Level="@Game.CurrentLevel"
-                           NextLevel="NextLevel"></LevelComplete>
+            <CascadingValue Value="@Game.CurrentLevel">
+                <LevelComplete NextLevel="NextLevel"></LevelComplete>
+            </CascadingValue>
             break;
 
         //not checked as yet
         case GameStage.FailLevel:
-<CascadingValue Value="@Game.CurrentLevel">
-    <LevelFailed 
-                 ResetLevel="ResetLevel"></LevelFailed>
-</CascadingValue> 
-break;
+            <CascadingValue Value="@Game.CurrentLevel">
+                <LevelFailed ResetLevel="ResetLevel"></LevelFailed>
+            </CascadingValue>
+            break;
 
         //not checked as yet
         case GameStage.CompleteMode:
-            <DifficultyComplete @bind-ModeDifficulty="@Game.GameSettings.Difficulty"
-                                GameMenu="ResetGame"></DifficultyComplete>
+            <CascadingValue Value="@Game.GameSettings.Difficulty">
+                <DifficultyComplete GameMenu="ResetGame"></DifficultyComplete>
+            </CascadingValue>
             break;
     }
 }
@@ -139,11 +140,12 @@ break;
 
     void CheckFlag(bool success)
     {
+        Game.TokensSelected = new List<Token>();
         if (success)
         {
             //check if last level if not  go next level
-            Game.CurrentLevel++;
-            if (Game.CurrentLevel > Game.GameSettings.MaxLevel)
+           
+            if (Game.CurrentLevel == Game.GameSettings.MaxLevel)
             {
                 //difficulty is complete
                 GameStage = GameStage.CompleteMode;
@@ -156,7 +158,7 @@ break;
         else
         {
             GameStage = GameStage.FailLevel;
-            
+
         }
         StateHasChanged();
     }

@@ -5,7 +5,7 @@
 <button @onclick="ResetCurrentLevel" type="submit">Restart Level</button>
 
 @code {
-    [Parameter]
+    [CascadingParameter]
     public int Level { get; set; }
     [Parameter]
     public EventCallback<bool> ResetLevel { get; set; }
