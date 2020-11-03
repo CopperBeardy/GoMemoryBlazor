@@ -2,7 +2,7 @@
 
 
 <h3>Select Difficulty</h3>
-<label class="radio-inline"><input type="radio" @onchange="ChangeOption"  value="Easy" name="difficulty">Easy</label>
+<label class="radio-inline"><input type="radio" @onchange="ChangeOption" value="Easy" name="difficulty">Easy</label>
 <label class="radio-inline"><input type="radio" @onchange="ChangeOption" value="Normal" name="difficulty" checked>Normal</label>
 <label class="radio-inline"><input type="radio" @onchange="ChangeOption" value="Hard" name="difficulty">Hard</label>
 
@@ -10,27 +10,54 @@
 
 
 @code {
-    [Parameter]
-    public ModeDifficulty Difficulty { get; set; }
+    [CascadingParameter]
+    public Game Game { get; set; }
 
     [Parameter]
-    public EventCallback<ModeDifficulty> DifficultyChanged { get; set; }
+    public EventCallback<bool> OptionsSet { get; set; }
 
     protected override Task OnInitializedAsync()
     {
-        Difficulty = ModeDifficulty.Normal;
+        Game.GameSettings.Difficulty = ModeDifficulty.Normal;
+        Game.GameSettings.MaxLevel = 20;
+        Game.GameSettings.SurfaceSize = 5;
+        Game.GameSettings.MaxTokens = 25;
         return base.OnInitializedAsync();
     }
 
     public Task OptionsSelected()
     {
 
-        return DifficultyChanged.InvokeAsync(Difficulty);
+        return OptionsSet.InvokeAsync(false);
     }
 
     public void ChangeOption(ChangeEventArgs change)
     {
-        
-        Difficulty = (ModeDifficulty)Enum.Parse(typeof(ModeDifficulty),  change.Value.ToString());
+
+        var difficulty = (ModeDifficulty)Enum.Parse(typeof(ModeDifficulty), change.Value.ToString());
+        switch (difficulty)
+        {
+            case ModeDifficulty.Easy:
+                Game.GameSettings.Difficulty = ModeDifficulty.Easy;
+                Game.GameSettings.MaxLevel = 10;
+                Game.GameSettings.SurfaceSize = 4;
+                Game.GameSettings.MaxTokens = 16;
+                break;
+            case ModeDifficulty.Normal:
+                Game.GameSettings.Difficulty = ModeDifficulty.Normal;
+                Game.GameSettings.MaxLevel = 20;
+                Game.GameSettings.SurfaceSize = 5;
+                Game.GameSettings.MaxTokens = 25;
+                break;
+            case ModeDifficulty.Hard:
+                Game.GameSettings.Difficulty = ModeDifficulty.Hard;
+                Game.GameSettings.MaxLevel = 30;
+                Game.GameSettings.MaxTokens = 36;
+                Game.GameSettings.SurfaceSize = 6;
+                break;
+            default:
+                break;
+        }
+
     }
 }

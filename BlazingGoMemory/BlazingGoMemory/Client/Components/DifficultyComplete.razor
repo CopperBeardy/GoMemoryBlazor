@@ -6,14 +6,14 @@
 <button @onclick="MainMenu" type="submit">Main Menu</button>
 
 @code {
-    [CascadingParameter]
+    [Parameter]
     public ModeDifficulty ModeDifficulty { get; set; }
     [Parameter]
-    public EventCallback<ModeDifficulty> GameMenu { get; set; }
+    public EventCallback<bool> GameMenu { get; set; }
 
     public Task MainMenu()
     {
-        ModeDifficulty = ModeDifficulty.None;
-        return GameMenu.InvokeAsync(ModeDifficulty);
+        
+        return GameMenu.InvokeAsync(true);
     }
 }
