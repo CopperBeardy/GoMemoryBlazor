@@ -2,7 +2,6 @@
 <div class="d-flex flex-column ">
     <div class="d-flex flex-row">
         <label>Level - @Game.CurrentLevel </label>
-
     </div>
     <div class="d-flex flex-wrap">
         @foreach (Token token in Game.TokensToRemember)
@@ -13,17 +12,12 @@
     </div>
 </div>
 
-<button @onclick="ChangeStage" type="submit">Start</button>
-
+<button @onclick="(() => PlayLevel.InvokeAsync(true))" type="submit">Start</button>
 
 @code {
     [CascadingParameter]
     public Game Game { get; set; }
     [Parameter]
-    public EventCallback<bool> NextLevel { get; set; }
-
-    public Task ChangeStage()
-    {
-        return NextLevel.InvokeAsync(true);
-    }
+    public EventCallback<bool> PlayLevel { get; set; }
+   
 }

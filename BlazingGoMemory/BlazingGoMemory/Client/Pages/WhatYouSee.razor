@@ -2,10 +2,10 @@
 
 <h3>WhatYouSee</h3>
 
-@if (ToggleGameOptionsShow)
+@if (GameStage == GameStage.None)
 {
-    <CascadingValue Value="@Game" IsFixed="true">
-        <GameOptions OptionsSet="ToggleGameOptionsShowChange"></GameOptions>
+    <CascadingValue Value="@Game" >
+        <GameOptions OptionsSet="ToggleGameOptions"></GameOptions>
     </CascadingValue>
 }
 else
@@ -13,14 +13,14 @@ else
     switch (GameStage)
     {
         case GameStage.Memorize:
-            <CascadingValue Value="@Game" IsFixed="true">
-                <MemorisingScreen NextLevel="TogglePlayStage"></MemorisingScreen>
+            <CascadingValue Value="@Game" >
+                <MemorisingScreen  PlayLevel="(_ => GameStage = GameStage.Guess)"></MemorisingScreen>
             </CascadingValue>
             break;
 
         case GameStage.Guess:
 
-            <CascadingValue Value="@Game" IsFixed="true">
+            <CascadingValue Value="@Game" >
                 <PlayArea Completed="CheckFlag"></PlayArea>
             </CascadingValue>
             break;
@@ -49,25 +49,16 @@ else
 }
 <button @onclick="ResetGame">Reset Game</button>
 
-
-
-
-
 @code {
 
-    public Game Game { get; set; }
+    public Game Game { get; set; } = new Game();
 
-    public bool ToggleGameOptionsShow { get; set; }
-
-    //[Inject]
-    //public ITokenHelper TokenHelper { get; set; }
-    public GameStage GameStage { get; set; }
+    public GameStage GameStage { get; set; } = GameStage.None;
 
 
     protected override Task OnInitializedAsync()
     {
-        Game = new Game();
-        ToggleGameOptionsShowChange(true);
+       Game.GameSettings.RecallStyle = RecallStyle.Unordered;      
         return base.OnInitializedAsync();
     }
 
@@ -75,22 +66,18 @@ else
     {
         Game.CurrentLevel = 0;
         GameStage = GameStage.None;
-
-        ToggleGameOptionsShowChange(true);
-
     }
 
-    void ToggleGameOptionsShowChange(bool show)
+    void ToggleGameOptions()
     {
-
-        if (show)
+        switch (GameStage)
         {
-            ToggleGameOptionsShow = true;
-        }
-        else
-        {
-            InitializeGame();
-            ToggleGameOptionsShow = false;
+            case GameStage.None:
+                NextLevel(true);
+                break;
+            default:
+                GameStage = GameStage.None;
+                break;
         }
         StateHasChanged();
     }
@@ -98,6 +85,7 @@ else
     void ResetLevel()
     {
         GameStage = GameStage.Memorize;
+        SetTokens();
         StateHasChanged();
     }
 
@@ -109,45 +97,18 @@ else
             true => Game.CurrentLevel++,
             false => Game.CurrentLevel--
         };
-
-        TogglePlayStage();
+        GameStage = GameStage.Memorize;
+        SetTokens();
     }
 
-    void InitializeGame()
-    {
-
-        Game.GameSettings.RecallStyle = RecallStyle.Unordered;
-        Game.AllTokens = TokenHelper.ToMatchTokenList(Game.GameSettings.MaxTokens, TokenHelper.GetAllTokens());
-        NextLevel(true);
-
-    }
-
-    void TogglePlayStage()
-    {
-        if (GameStage == GameStage.Memorize)
-        {
-            GameStage = GameStage.Guess;
-            GuessStageSet();
-        }
-        else
-        {
-            GameStage = GameStage.Memorize;
-            MemorizeStage();
-        }
-
-        StateHasChanged();
-    }
 
     void CheckFlag(bool success)
     {
         Game.TokensSelected = new List<Token>();
         if (success)
         {
-            //check if last level if not  go next level
-           
             if (Game.CurrentLevel == Game.GameSettings.MaxLevel)
             {
-                //difficulty is complete
                 GameStage = GameStage.CompleteMode;
             }
             else
@@ -163,26 +124,11 @@ else
         StateHasChanged();
     }
 
-    void MemorizeStage()
+    void SetTokens()
     {
-
+        Game.AllTokens = TokenHelper.ToMatchTokenList(Game.GameSettings.MaxTokens, TokenHelper.GetAllTokens());
         Game.TokensToRemember = TokenHelper.ToMatchTokenList(Game.CurrentLevel + 2, Game.AllTokens);
         Game.TokensToRemember = TokenHelper.ShuffleCollection(Game.TokensToRemember);
     }
-
-    void GuessStageSet()
-    {
-
-
-
-    }
-
-    //to write a method to watch the guess tokens being hit and check
-    //whether they are correct or not. if not then display fail component
-    //else if correct check if required number correctly guess,if not
-    //wait for next guess. if all required correctly guessed display complete level component
-    // then if all level have been completed show difficult complete screen, else start next level.
-
-
 
 }

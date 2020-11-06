@@ -8,12 +8,9 @@ namespace BlazingGoMemory.Shared.Models
     public class GameSettings
     {
         public int MaxLevel { get; set; }
-        public int MaxTokens { get; set; }      
-        public RecallStyle RecallStyle { get; set; }
+        public int MaxTokens { get; set; }
+        public RecallStyle RecallStyle { get; set; } 
         public ModeDifficulty Difficulty { get; set; }
-
-        public int SurfaceSize { get; set; }
-
-
+        public int SurfaceSize { get; set; }       
     }
 }

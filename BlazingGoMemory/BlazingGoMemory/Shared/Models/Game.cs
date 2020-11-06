@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlazingGoMemory.Shared.Enums;
+using BlazingGoMemory.Shared.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,10 +19,12 @@ namespace BlazingGoMemory.Shared.Models
         public Game()
         {
             CurrentLevel = 0;
-            GameSettings = new GameSettings();            
+            GameSettings =   GameSettingsHelper.SetDifficulty(ModeDifficulty.Normal);            
             TokensToRemember = new List<Token>();          
             TokensSelected = new List<Token>();
             
         }
+
+       
     }
 }
