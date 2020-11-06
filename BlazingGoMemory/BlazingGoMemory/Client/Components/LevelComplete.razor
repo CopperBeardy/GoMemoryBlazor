@@ -2,17 +2,12 @@
 
 <h3>Level @Level Complete</h3>
 
-<button @onclick="MoveToNextLevel" type="submit" >Next Level</button>
+<button @onclick="(() =>  NextLevel.InvokeAsync(true))" type="submit" >Next Level</button>
 
 @code {
-        [Parameter]
+        [CascadingParameter]
         public int Level { get; set; }
         [Parameter]
         public EventCallback<bool> NextLevel { get; set; }
 
-    public Task MoveToNextLevel()
-    {
-
-        return NextLevel.InvokeAsync(true);
-    }
 }

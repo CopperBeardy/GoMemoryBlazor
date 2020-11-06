@@ -3,17 +3,11 @@
 
 <h3>You have completed all of the  @ModeDifficulty.ToString() </h3>
 
-<button @onclick="MainMenu" type="submit">Main Menu</button>
+<button @onclick="(() => GameMenu.InvokeAsync(true))" type="submit">Main Menu</button>
 
 @code {
     [Parameter]
     public ModeDifficulty ModeDifficulty { get; set; }
     [Parameter]
     public EventCallback<bool> GameMenu { get; set; }
-
-    public Task MainMenu()
-    {
-        
-        return GameMenu.InvokeAsync(true);
-    }
 }

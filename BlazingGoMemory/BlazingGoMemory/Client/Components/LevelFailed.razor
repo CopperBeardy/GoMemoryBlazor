@@ -2,17 +2,12 @@
 
 <h3>Level @Level Failed</h3>
 
-<button @onclick="ResetCurrentLevel" type="submit">Restart Level</button>
+<button @onclick="(() => ResetLevel.InvokeAsync(false))" type="submit">Restart Level</button>
 
 @code {
-    [Parameter]
+    [CascadingParameter]
     public int Level { get; set; }
     [Parameter]
     public EventCallback<bool> ResetLevel { get; set; }
-
-    public Task ResetCurrentLevel()
-    {
-
-        return ResetLevel.InvokeAsync(false);
-    }
+  
 }

@@ -3,15 +3,12 @@
 <div class="@GridType">
     @for (int i = 0; i < Game.GameSettings.SurfaceSize; i++)
     {
-
         @for (int j = 0; j < Game.GameSettings.SurfaceSize; j++)
         {
             <ImageButton Src="@Game.AllTokens[index].Source"
                          Name="@Game.AllTokens[index].Name"
                          Selected="TokenClicked"></ImageButton>
-
             index++;
-
         }
     }
 </div>
@@ -21,8 +18,6 @@
     public Game Game { get; set; }
 
     int index = 0;
-
-
 
     [Parameter]
     public string GridType { get; set; }
@@ -51,8 +46,6 @@
         }
 
         return Completed.InvokeAsync(false);
-
-
     }
 
 
@@ -68,7 +61,6 @@
             Game.TokensSelected.Add(t);
             if (Game.TokensSelected.Count == Game.TokensToRemember.Count)
             {
-
                 EndPlay(Flag = true);
             }
         }
