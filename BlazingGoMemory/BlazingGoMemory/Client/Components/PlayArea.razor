@@ -1,24 +1,9 @@
 ﻿<h3>PlayArea</h3>
 <div>
-    <div >
-        <h5>Last Guess</h5>
-        <div class="horizontal-scroll-wrapper squares"><div>
-    @if (previousGuesses.Count > 0)
-    {
-        foreach (var token in previousGuesses)
-        {
-            <img src="@token.Source" alt="@token.Name" />
 
-        }
+    <h5>Last Guess</h5>
+   <GuessListHorizontal Guesses="@previousGuesses" />
 
-    }
-    else
-    {
-        <img class="medium-img" src="../images/qm.png" alt="Question mark Icon" />
-    }
-</div>
-        </div>
-    </div>
 
     <div class="@GridType">
         @for (int i = 0; i < Game.GameSettings.SurfaceSize; i++)
@@ -47,6 +32,9 @@
 
     public List<Token> previousGuesses { get; set; }
 
+   
+
+
     protected override Task OnInitializedAsync()
     {
         SetGrid();
@@ -72,7 +60,7 @@
         return Completed.InvokeAsync(false);
     }
 
-
+    //Todo: modifiy to allow for other game style apart from undorder
     void TokenClicked(string name)
     {
         bool Flag = false;
@@ -93,7 +81,7 @@
         {
             EndPlay(Flag);
         }
-     
+
 
     }
 
