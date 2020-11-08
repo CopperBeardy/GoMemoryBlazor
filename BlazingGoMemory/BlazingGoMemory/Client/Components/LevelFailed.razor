@@ -5,9 +5,8 @@
 <button @onclick="(() => ResetLevel.InvokeAsync(false))" type="submit">Restart Level</button>
 
 @code {
-    [CascadingParameter]
+    [Parameter]
     public int Level { get; set; }
     [Parameter]
-    public EventCallback<bool> ResetLevel { get; set; }
-  
+    public EventCallback<bool> ResetLevel { get; set; }  
 }

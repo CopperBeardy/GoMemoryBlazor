@@ -19,3 +19,24 @@
     grid-template-rows: repeat(6, 1fr);
     grid-column-gap: 0px;
 }
+
+.row-flexbox{
+    display: flex;
+    flex-direction: row-reverse;
+    align-content: center;
+}
+
+.horizontal-scroll-wrapper {
+    width: 100px;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transform: rotate(-90deg);
+    transform-origin: right top;
+}
+    .horizontal-scroll-wrapper > div {
+        width: 100px;
+        height: 100px;
+        transform: rotate(90deg);
+        transform-origin: right top;
+    }

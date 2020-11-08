@@ -15,9 +15,8 @@
 <button @onclick="(() => PlayLevel.InvokeAsync(true))" type="submit">Start</button>
 
 @code {
-    [CascadingParameter]
+    [Parameter]
     public Game Game { get; set; }
     [Parameter]
-    public EventCallback<bool> PlayLevel { get; set; }
-   
+    public EventCallback<bool> PlayLevel { get; set; }   
 }

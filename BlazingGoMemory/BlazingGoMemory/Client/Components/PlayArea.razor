@@ -1,18 +1,38 @@
 ﻿<h3>PlayArea</h3>
-
-<div class="@GridType">
-    @for (int i = 0; i < Game.GameSettings.SurfaceSize; i++)
+<div>
+    <div >
+        <h5>Last Guess</h5>
+        <div class="horizontal-scroll-wrapper squares"><div>
+    @if (previousGuesses.Count > 0)
     {
-        @for (int j = 0; j < Game.GameSettings.SurfaceSize; j++)
+        foreach (var token in previousGuesses)
         {
-            <ImageButton Src="@Game.AllTokens[index].Source"
-                         Name="@Game.AllTokens[index].Name"
-                         Selected="TokenClicked"></ImageButton>
-            index++;
+            <img src="@token.Source" alt="@token.Name" />
+
         }
+
+    }
+    else
+    {
+        <img class="medium-img" src="../images/qm.png" alt="Question mark Icon" />
     }
 </div>
+        </div>
+    </div>
 
+    <div class="@GridType">
+        @for (int i = 0; i < Game.GameSettings.SurfaceSize; i++)
+        {
+            @for (int j = 0; j < Game.GameSettings.SurfaceSize; j++)
+            {
+                <ImageButton Src="@Game.AllTokens[index].Source"
+                             Name="@Game.AllTokens[index].Name"
+                             Selected="TokenClicked"></ImageButton>
+                index++;
+            }
+        }
+    </div>
+</div>
 @code {
     [CascadingParameter]
     public Game Game { get; set; }
@@ -25,10 +45,14 @@
     [Parameter]
     public EventCallback<bool> Completed { get; set; }
 
+    public List<Token> previousGuesses { get; set; }
+
     protected override Task OnInitializedAsync()
     {
         SetGrid();
         Game.AllTokens = TokenHelper.ShuffleCollection(Game.AllTokens);
+        previousGuesses = new List<Token>();
+        Game.TokensSelected = new List<Token>();
         return base.OnInitializedAsync();
     }
 
@@ -42,7 +66,7 @@
     {
         if (success)
         {
-            return  Completed.InvokeAsync(true);
+            return Completed.InvokeAsync(true);
         }
 
         return Completed.InvokeAsync(false);
@@ -59,6 +83,7 @@
             !Game.TokensSelected.Contains(t))
         {
             Game.TokensSelected.Add(t);
+            previousGuesses.Add(t);
             if (Game.TokensSelected.Count == Game.TokensToRemember.Count)
             {
                 EndPlay(Flag = true);
@@ -68,7 +93,11 @@
         {
             EndPlay(Flag);
         }
+     
+
     }
+
+
 
     void SetGrid()
     {
