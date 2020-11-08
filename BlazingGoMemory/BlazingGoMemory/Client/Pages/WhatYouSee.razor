@@ -2,51 +2,36 @@
 
 <h3>WhatYouSee</h3>
 
-@if (GameStage == GameStage.None)
+
+@switch (GameStage)
 {
-    <CascadingValue Value="@Game" >
-        <GameOptions OptionsSet="ToggleGameOptions"></GameOptions>
-    </CascadingValue>
+    case GameStage.None:
+        <GameOptions Game="@Game" OptionsSet="ToggleGameOptions"></GameOptions>
+        break;
+    case GameStage.Memorize:
+        <MemorisingScreen Game="@Game" PlayLevel="(_ => GameStage = GameStage.Guess)"></MemorisingScreen>
+        break;
+
+    case GameStage.Guess:
+        <CascadingValue Value="@Game">
+            <PlayArea  Completed="CheckFlag"></PlayArea>
+        </CascadingValue>
+        break;
+
+    case GameStage.LevelComplete:
+        <LevelComplete Level="@Game.CurrentLevel" NextLevel="NextLevel"></LevelComplete>
+        break;
+
+    case GameStage.FailLevel:
+        <LevelFailed Level="@Game.CurrentLevel" ResetLevel="ResetLevel"></LevelFailed>
+        break;
+
+   
+    case GameStage.CompleteMode:
+        <DifficultyComplete ModeDifficulty="@Game.GameSettings.Difficulty" GameMenu="ResetGame"></DifficultyComplete>
+        break;
 }
-else
-{
-    switch (GameStage)
-    {
-        case GameStage.Memorize:
-            <CascadingValue Value="@Game" >
-                <MemorisingScreen  PlayLevel="(_ => GameStage = GameStage.Guess)"></MemorisingScreen>
-            </CascadingValue>
-            break;
 
-        case GameStage.Guess:
-
-            <CascadingValue Value="@Game" >
-                <PlayArea Completed="CheckFlag"></PlayArea>
-            </CascadingValue>
-            break;
-
-        //not checked as yet
-        case GameStage.LevelComplete:
-            <CascadingValue Value="@Game.CurrentLevel">
-                <LevelComplete NextLevel="NextLevel"></LevelComplete>
-            </CascadingValue>
-            break;
-
-        //not checked as yet
-        case GameStage.FailLevel:
-            <CascadingValue Value="@Game.CurrentLevel">
-                <LevelFailed ResetLevel="ResetLevel"></LevelFailed>
-            </CascadingValue>
-            break;
-
-        //not checked as yet
-        case GameStage.CompleteMode:
-            <CascadingValue Value="@Game.GameSettings.Difficulty">
-                <DifficultyComplete GameMenu="ResetGame"></DifficultyComplete>
-            </CascadingValue>
-            break;
-    }
-}
 <button @onclick="ResetGame">Reset Game</button>
 
 @code {
@@ -58,7 +43,7 @@ else
 
     protected override Task OnInitializedAsync()
     {
-       Game.GameSettings.RecallStyle = RecallStyle.Unordered;      
+        Game.GameSettings.RecallStyle = RecallStyle.Unordered;
         return base.OnInitializedAsync();
     }
 
@@ -119,7 +104,6 @@ else
         else
         {
             GameStage = GameStage.FailLevel;
-
         }
         StateHasChanged();
     }

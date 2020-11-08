@@ -5,20 +5,25 @@
 <label class="radio-inline"><input type="radio" @onchange="ChangeOption" value="Normal" name="difficulty" checked>Normal</label>
 <label class="radio-inline"><input type="radio" @onchange="ChangeOption" value="Hard" name="difficulty">Hard</label>
 
-<button @onclick="(() => OptionsSet.InvokeAsync(false) )" type="submit">Play</button>
+<button @onclick="(() => OptionsSet.InvokeAsync(Game) )" type="submit">Play</button>
 
 
 @code {
-    [CascadingParameter]
+    [Parameter]
     public Game Game { get; set; }
 
     [Parameter]
-    public EventCallback<bool> OptionsSet { get; set; }
+    public EventCallback<Game> OptionsSet { get; set; }
 
     public void ChangeOption(ChangeEventArgs change)
     {
         Game.GameSettings =
-            GameSettingsHelper.SetDifficulty((ModeDifficulty)Enum.Parse(typeof(ModeDifficulty),
-            change.Value.ToString()));
+            GameSettingsHelper.SetDifficulty(
+                (ModeDifficulty)Enum.Parse(typeof(ModeDifficulty),
+                change.Value.ToString())
+                );
     }
+
+   
+
 }
