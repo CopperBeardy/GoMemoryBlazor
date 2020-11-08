@@ -1,0 +1,23 @@
+﻿
+<div class="horizontal-scroll-wrapper">
+    <div>
+        @if (Guesses.Count > 0)
+        {
+            foreach (var token in Guesses)
+            {
+                <img src="@token.Source" alt="@token.Name" />
+            }
+        }
+        else
+        {
+            <img class="medium-img" src="../images/qm.png" alt="Question mark Icon" />
+        }
+    </div>
+</div>
+@code {
+
+    [Parameter]
+    public List<Token> Guesses { get; set; }
+
+    //Todo sort out the css and scrolling;
+}

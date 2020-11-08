@@ -27,8 +27,10 @@
 }
 
 .horizontal-scroll-wrapper {
-    width: 100px;
-    height: 400px;
+    display:block;
+    position:absolute;
+    max-width: 300px;
+    max-height: 200px;
     overflow-y: scroll;
     overflow-x: hidden;
     transform: rotate(-90deg);
