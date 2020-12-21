@@ -6,10 +6,17 @@
     <div class="d-flex flex-wrap">
         @foreach (Token token in Game.TokensToRemember)
         {
-
+        <div>
+            @if (Game.GameSettings.RecallStyle == RecallStyle.Ordered)
+            {
+            <label> @sequenceCount</label>
+           
+                sequenceCount++;
+            }
             <img src="@token.Source" width="200" height="200" />
+        </div>
         }
-    </div>
+    </div>    
 </div>
 
 <button @onclick="(() => PlayLevel.InvokeAsync(true))" type="submit">Start</button>
@@ -18,5 +25,7 @@
     [Parameter]
     public Game Game { get; set; }
     [Parameter]
-    public EventCallback<bool> PlayLevel { get; set; }   
+    public EventCallback<bool> PlayLevel { get; set; }
+
+    public int sequenceCount  = 1;
 }

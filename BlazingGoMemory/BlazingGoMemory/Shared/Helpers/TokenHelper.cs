@@ -1,19 +1,12 @@
-﻿using BlazingGoMemory.Shared.Interfaces;
-//using GoMemory.Shared.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿
+using BlazingGoMemory.Shared.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Drawing;
-using System.Threading.Tasks;
-using BlazingGoMemory.Shared.Models;
-using System.IO.Pipes;
 
-namespace BlazingGoMemory.Client.Helpers
+namespace BlazingGoMemory.Shared.Helpers
 {
-       public static class TokenHelper 
+    public static class TokenHelper 
        {
              
         public static List<Token> GetAllTokens()
@@ -69,12 +62,7 @@ namespace BlazingGoMemory.Client.Helpers
                 });
             }
             return tokens;
-        }
-        
-       
-        //public List<Token> GetShuffledTokens(int totalTokens) =>
-        //    ShuffleCollection(_tokens).Take(totalTokens).ToList(); 
-        
+        }  
         public static List<Token> ToMatchTokenList(int numberOfTokensNeeded, List<Token> tokens) =>
             ShuffleCollection(tokens).Take(numberOfTokensNeeded).ToList();
 

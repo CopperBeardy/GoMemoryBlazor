@@ -32,8 +32,6 @@
 
     public List<Token> previousGuesses { get; set; }
 
-   
-
 
     protected override Task OnInitializedAsync()
     {
@@ -72,6 +70,16 @@
         {
             Game.TokensSelected.Add(t);
             previousGuesses.Add(t);
+            if(Game.GameSettings.RecallStyle == RecallStyle.Ordered)
+            {
+                for (int i = 0; i < Game.TokensSelected.Count; i++)
+                {
+                    if(Game.TokensSelected[i] != Game.TokensToRemember[i])
+                    {
+                        EndPlay(false);
+                    }
+                }
+            }
             if (Game.TokensSelected.Count == Game.TokensToRemember.Count)
             {
                 EndPlay(Flag = true);
@@ -81,11 +89,7 @@
         {
             EndPlay(Flag);
         }
-
-
     }
-
-
 
     void SetGrid()
     {

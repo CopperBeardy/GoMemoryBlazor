@@ -1,6 +1,6 @@
-﻿@page "/Whatyousee"
+﻿@page "/Sequential"
 
-<h3>WhatYouSee</h3>
+<h3>Sequential</h3>
 
 @switch (Game.GameStage)
 {
@@ -42,7 +42,7 @@
         switch (Game.GameStage)
         {
             case GameStage.None:
-                Game.GameSettings.RecallStyle = RecallStyle.Unordered;
+                Game.GameSettings.RecallStyle = RecallStyle.Ordered;
                 Game.NextLevel(true);
                 break;
             default:
@@ -52,8 +52,13 @@
         StateHasChanged();
     }
 
+   
+
+   
 
 
+    
 
+   
 
 }
